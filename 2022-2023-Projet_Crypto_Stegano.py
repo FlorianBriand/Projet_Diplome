@@ -52,7 +52,7 @@ def recuperer(image,taille):
 
 # Valeurs par defaut
 nom_defaut = "image_test.png"
-message_defaut = "Hello world"
+message_defaut = "Hello world Florian Briand CY Tech 2022-2023"
 choix_defaut = 1
 
 # programme de demonstration
