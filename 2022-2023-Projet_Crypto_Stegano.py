@@ -1,6 +1,10 @@
 #!/usr/bin/python
 # coding=utf8
-
+import base64
+import os
+import struct
+import hashlib
+import time
 from PIL import Image
 
 def vers_8bit(c):
@@ -51,10 +55,6 @@ def recuperer(image,taille):
 	return message
 
 def GoogleAuthenticatorCode(secret):
-	import base64
-	import struct
-	import hashlib
-	import time
 	key = base64.b32decode(secret)
 	msg = struct.pack(">Q", int(time.time()) // 30)
 	h = hashlib.new("sha1", key + msg).digest()
@@ -63,14 +63,18 @@ def GoogleAuthenticatorCode(secret):
 	return str(h).zfill(6)
 
 print ("Début du programme")
-secret = "JBSWY3DPEHPK3PXP"
+secret = "FBSWY3DPEHPK3PXP"
 print ("Secret : " + secret)
 code = GoogleAuthenticatorCode(secret)
 print ("Code : " + code)
 
+
+
+'''
+
 # Valeurs par defaut
 nom_defaut = "image_test.png"
-message_defaut = "Florian Briand || CY Tech || timestamp"
+message_defaut = "Florian Briand CY Tech" + str(time.time())
 choix_defaut = 1
 
 # programme de demonstration
@@ -94,3 +98,6 @@ else :
 	mon_image = Image.open(nom_fichier)
 	message_retrouve = recuperer(mon_image, message_a_traiter)
 	print (message_retrouve)
+
+'''
+
