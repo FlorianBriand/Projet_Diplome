@@ -69,6 +69,10 @@ code = GoogleAuthenticatorCode(secret)
 print ("Code : " + code)
 
 
+# Ne marche pas
+#os.system("openssl dgst -sha256 -sign private.pem -out sha1.sign test.txt")
+#os.system("openssl dgst -sha256 -verify ca.pem -signature sha1.sign test.txt")
+
 
 '''
 
