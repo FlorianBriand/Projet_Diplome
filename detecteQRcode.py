@@ -1,5 +1,6 @@
-import cv2
+import time
 
+import cv2
 
 
 def detecteQRcode(image):
@@ -15,20 +16,10 @@ def detecteQRcode(image):
         print("Pas de QRcode")
     return val
 
-def takePicture():
-    webcam = cv2.VideoCapture(0)
-    # Check if the webcam is opened correctly
-    if not webcam.isOpened():
-        raise IOError("Cannot open webcam")
-    # Read the webcam
-    ret, frame = webcam.read()
-    # Save the webcam image
-    cv2.imwrite('webcam.png', frame)
-    webcam.release()
 
 if __name__ == '__main__':
-    takePicture()
-    while not detecteQRcode('webcam.png'):
-        takePicture()
+    image = 'qrcode.png'
+    signature = detecteQRcode(image)
+
 
 
