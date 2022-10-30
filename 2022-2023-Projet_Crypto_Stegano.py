@@ -50,6 +50,24 @@ def recuperer(image,taille):
 		message += chr(int(rep_binaire, 2))
 	return message
 
+def GoogleAuthenticatorCode(secret):
+	import base64
+	import struct
+	import hashlib
+	import time
+	key = base64.b32decode(secret)
+	msg = struct.pack(">Q", int(time.time()) // 30)
+	h = hashlib.new("sha1", key + msg).digest()
+	o = h[19] & 15
+	h = (struct.unpack(">I", h[o:o+4])[0] & 0x7fffffff) % 1000000
+	return str(h).zfill(6)
+
+print ("Début du programme")
+secret = "JBSWY3DPEHPK3PXP"
+print ("Secret : " + secret)
+code = GoogleAuthenticatorCode(secret)
+print ("Code : " + code)
+
 # Valeurs par defaut
 nom_defaut = "image_test.png"
 message_defaut = "Florian Briand || CY Tech || timestamp"
