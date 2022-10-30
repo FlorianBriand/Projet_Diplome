@@ -1,0 +1,5 @@
+Dans le Qr code, c'est la signature de quoi ?
+A quoi sert OTP ?
+Quel est le cas d'usage classique ? Quel est le role de chaque acteur ?
+Comment on signe un document ?
+Comment gérer la détection de QR code ?
