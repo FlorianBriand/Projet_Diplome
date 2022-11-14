@@ -4,6 +4,7 @@ from flask import Flask, render_template, request, redirect, url_for
 
 import stegano as stg
 import creerDiplome as cd
+import verifDiplome as vd
 
 app = Flask(__name__)
 
@@ -19,7 +20,7 @@ def hello_world():
     <h1>Diplôme digital</h1>
     <a href="/creerDiplome">Créer un diplôme</a>
     <br>
-    <a href="/verifDiplom">Vérifier un diplôme</a>
+    <a href="/verifDiplome">Vérifier un diplôme</a>
     </body>
     </html>
     """
@@ -72,6 +73,7 @@ def verifDiplom():
         f = request.files['file']
         # Sauvegarder le fichier dans le dossier upload
         f.save('diplome/uploads/' + f.filename)
+        vd.verifDiplome(f.filename)
 
         return redirect(url_for('listeDiplomes'))
     else:

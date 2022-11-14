@@ -1,8 +1,6 @@
 import time
-
+import stegano as stg
 import cv2
-
-
 
 def detecteQRcode(image):
     d = cv2.QRCodeDetector()
@@ -16,18 +14,19 @@ def detecteQRcode(image):
     else:
         print("Pas de QRcode")
     return val
-
-
+"""
 if __name__ == '__main__':
-    image = 'qrcode.png'
+    image = 'diplome/diplomeCree/qr_code.png'
     signature = detecteQRcode(image)
     # verification de la signature
     # os.system("openssl dgst -sha256 -verify ca.pem -signature sha1.sign test.txt")
 
-    # Utilisat ion de la fonction récupérer pour récupérer le message
-
-    message = recuperer("stegano_image_test", len(signature))
-
+    # Utilisation de la fonction récupérer pour récupérer le message
+    message = stg.recuperer("diplome/diplomeCree/stegano_Briand_Flo.png", 80)
+    # enelever les étoiles
+    message = message.replace("*", "")
+    print("Message : ", message)
+"""
 
 
 

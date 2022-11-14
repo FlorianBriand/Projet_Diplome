@@ -11,6 +11,7 @@ def creerDiplome(nom, prenom, nomDiplome, timestamp):
     signatureMessage(message, nom, prenom)
     # Mettre la signature dans le QRcode
     crQRC.creerQRcode(nom, prenom)
+    # TODO : DELETE the nom_prenom.sign
     # TODO : Mettre le QRcode dans l'image
 
     return
@@ -25,6 +26,8 @@ def signatureMessage(message,nom,prenom):
 
 def infoStegano(message, nom, prenom):
     imageCertif = Image.open("diplome/image_test.png")
+    # Completer le message avec des étoiles pour avoir une taille de 80 caractères
+    message = message + "*" * (80 - len(message))
     stg.cacher(imageCertif, message)
     imageCertif.save("diplome/diplomeCree/stegano_" + nom + "_" + prenom + ".png")
     return
