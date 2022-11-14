@@ -8,9 +8,6 @@ def detecteQRcode(image):
     # si val est vide, il n'y a pas de QRcode
     if val:
         print("QRcode detecté")
-        print("Valeur:", val)
-        print("Points:", points)
-        print("QRcode:", qrcode)
     else:
         print("Pas de QRcode")
     return val
@@ -18,6 +15,7 @@ def detecteQRcode(image):
 if __name__ == '__main__':
     image = 'diplome/diplomeCree/qr_code.png'
     signature = detecteQRcode(image)
+    print("signature:", signature)
     # verification de la signature
     # os.system("openssl dgst -sha256 -verify ca.pem -signature sha1.sign test.txt")
 

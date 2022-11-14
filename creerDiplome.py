@@ -21,7 +21,7 @@ def signatureMessage(message,nom,prenom):
     #os.system("openssl dgst -sha256 -sign private/private.pem -out sha256.sign code.txt")
     os.system("openssl dgst -sha256 -sign private/private.pem -out "+nom+"_"+prenom+".sign code.txt")
     # supprimer le fichier code.txt
-    os.system("rm code.txt")
+    os.system("del code.txt")
     return
 
 def infoStegano(message, nom, prenom):
