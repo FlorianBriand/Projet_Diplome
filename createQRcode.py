@@ -1,5 +1,20 @@
+import base64
+
 import qrcode
 
-img = qrcode.make('test')
+def creerQRcode(nom, prenom):
+    # Get the content of the file sha256.sign
+    # and convert it to a string
+    # TODO : A changer par le nom et le prenom de la personne
+    #with open("gestionCertificat/"+nom+"_"+prenom+".sign", "rb") as f:
+    with open("gestionCertificat/sha256.sign", "rb") as f:
+        content = f.read()
+        # decode the content to base 64
+        content = base64.b64encode(content)
+        print(content)
 
-img.save('qrcode.png')
+        # Create qr code instance with the file sha256.sign
+        qr = qrcode.make(content)
+        # Save the qr code as a png file
+        qr.save("diplome/diplomeCree/qr_code.png")
+        return

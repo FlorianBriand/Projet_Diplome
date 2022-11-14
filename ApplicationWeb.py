@@ -1,4 +1,9 @@
-from flask import Flask
+from datetime import datetime
+
+from flask import Flask, render_template, request, redirect, url_for
+
+import stegano as stg
+import creerDiplome as cd
 
 app = Flask(__name__)
 
