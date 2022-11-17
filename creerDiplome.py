@@ -3,6 +3,8 @@ from PIL import Image
 import stegano as stg
 import createQRcode as crQRC
 
+CHEMIN_ACCES_OPENSSL = "C:\\MesProgrammes\\OpenSSL-Win64\\bin\\openssl.exe"
+
 def creerDiplome(nom, prenom, nomDiplome, timestamp):
     message = nom + " " + prenom + " " + nomDiplome + " " + timestamp
     # Mettre les informations en stégano dans l'image
@@ -19,8 +21,8 @@ def creerDiplome(nom, prenom, nomDiplome, timestamp):
 def signatureMessage(message,nom,prenom):
     os.system("echo  " + message + " > code.txt")
     # TODO : Ajouter la gestion d'erreur
-    #os.system("openssl dgst -sha256 -sign private/private.pem -out sha256.sign code.txt")
-    os.system("openssl dgst -sha256 -sign private/private.pem -out "+nom+"_"+prenom+".sign code.txt")
+    #os.system(CHEMIN_ACCES_OPENSSL + " dgst -sha256 -sign private/private.pem -out sha256.sign code.txt")
+    os.system(CHEMIN_ACCES_OPENSSL + " dgst -sha256 -sign private/private.pem -out "+nom+"_"+prenom+".sign code.txt")
     # supprimer le fichier code.txt
     os.system("del code.txt")
     return

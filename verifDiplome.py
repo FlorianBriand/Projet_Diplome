@@ -2,6 +2,9 @@ import os
 import detecteQRcode as dQRC
 import stegano as stg
 from PIL import Image
+
+CHEMIN_ACCES_OPENSSL = "C:\\MesProgrammes\\OpenSSL-Win64\\bin\\openssl.exe"
+
 def verifDiplome(filename):
     # Decrypter la stegano
     #localisation du fichier
@@ -24,7 +27,7 @@ def verifDiplome(filename):
     # TODO : comparer  stegano et QRcode
     # openssl verify with certificat
     # TODO : PENSER A VERIFIER L'ENCODAGE 64
-    if (os.system("openssl dgst -sha256 -verify gestionCerficat/public.pem -signature signature.sign message.txt") == 0):
+    if (os.system(CHEMIN_ACCES_OPENSSL + " dgst -sha256 -verify gestionCerficat/public.pem -signature signature.sign message.txt") == 0):
         print("Signature OK")
     else:
         print("Signature KO")
