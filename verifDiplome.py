@@ -41,6 +41,7 @@ def verifDiplome(filename):
         return False
 
     signature = dQRC.detecteQRcode(imageqrcode)
+#Rajouter -d pour décoder
 
     # C:\MesProgrammes\OpenSSL-Win64\bin\openssl.exe dgst -hex -sha256 -passin pass:toto -sign gestionCertificat/private/private.pem -out test.sign code.txt
     # C:\MesProgrammes\OpenSSL-Win64\bin\openssl.exe dgst  -sha256 -passin pass:toto -sign gestionCertificat/private/private.pem -out test.sign code.txt
