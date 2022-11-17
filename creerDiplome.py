@@ -6,11 +6,16 @@ import createQRcode as crQRC
 CHEMIN_ACCES_OPENSSL = "C:\\MesProgrammes\\OpenSSL-Win64\\bin\\openssl.exe"
 
 def creerDiplome(nom, prenom, nomDiplome, timestamp):
+    # Lancement de la création du diplome
+    print("Création du diplome en cours...")
     message = nom + " " + prenom + " " + nomDiplome + " " + timestamp
     # Mettre les informations en stégano dans l'image
     infoStegano(message, nom, prenom)
+    print("Stegano OK : ", message)
     # Signer les informations en stégano dans l'image avec la clé privée
+    print("Signature en cours...")
     signatureMessage(message, nom, prenom)
+
     # Mettre la signature dans le QRcode
     crQRC.creerQRcode(nom, prenom)
     # TODO : DELETE the nom_prenom.sign
@@ -22,7 +27,13 @@ def signatureMessage(message,nom,prenom):
     os.system("echo  " + message + " > code.txt")
     # TODO : Ajouter la gestion d'erreur
     #os.system(CHEMIN_ACCES_OPENSSL + " dgst -sha256 -sign private/private.pem -out sha256.sign code.txt")
-    os.system(CHEMIN_ACCES_OPENSSL + " dgst -sha256 -sign private/private.pem -out "+nom+"_"+prenom+".sign code.txt")
+    resultatSignature = os.system(CHEMIN_ACCES_OPENSSL + " dgst -sha256 -passin pass:toto -sign gestionCertificat/private/private.pem -out diplome/diplomeCree/"+nom+"_"+prenom+".sign code.txt")
+    print("resultatSignature : ", resultatSignature)
+    if (resultatSignature == 0):
+        print("Signature OK")
+    else:
+        print("Erreur lors de la signature")
+        exit(1)
     # supprimer le fichier code.txt
     os.system("del code.txt")
     return
