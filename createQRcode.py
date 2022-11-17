@@ -6,8 +6,9 @@ def creerQRcode(nom, prenom):
     # Get the content of the .sign
     # and convert it to a string
     with open("diplome/diplomeCree/"+nom+"_"+prenom+".sign", "rb") as f:
+
         content = f.read()
-        # decode the content to base 64
+        print("AVant encodage64" + content)
         content = base64.b64encode(content)
         print(content)
 

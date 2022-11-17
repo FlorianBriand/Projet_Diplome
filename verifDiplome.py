@@ -1,3 +1,4 @@
+import base64
 import os
 import detecteQRcode as dQRC
 import stegano as stg
@@ -24,11 +25,11 @@ def verifDiplome(filename):
 
     # Decrypter la stegano
     message = stg.recuperer(mon_image, 80)
-    print("Message récupéré par stegano : ", message)
     # on récupère le nom et le prénom
     nom, prenom, nomDiplome, timestamp = recupInfo(message)
     # enlever les étoiles
     message = message.replace("*", "")
+    print("Message récupéré par stegano : ", message)
     os.system("echo " + message + " > stg_message.txt")
 
     # Decrypter le QRcode
@@ -40,15 +41,22 @@ def verifDiplome(filename):
         return False
 
     signature = dQRC.detecteQRcode(imageqrcode)
+
+    # encoder la signature en base2
+    signature = base64.b64decode(signature)
     print("signature:", signature)
-    # TODO : encode le message en binaire
-    os.system("echo " + signature + " > signature.sign")
+    os.system("echo " + str(signature) + " > signature.sign")
 
 
     # TODO : comparer  stegano et QRcode
     # openssl verify with certificat
     # TODO : PENSER A VERIFIER L'ENCODAGE 64
-    if (os.system(CHEMIN_ACCES_OPENSSL + " dgst -sha256 -verify gestionCerficat/public.pem -signature signature.sign stg_message.txt") == 0):
+    if (os.system(CHEMIN_ACCES_OPENSSL + " dgst -sha256 -verify gestionCertificat/public.pem -signature signature.sign stg_message.txt") == 0):
+        print("Signature OK")
+    else:
+        print("Signature KO")
+
+    if (os.system(CHEMIN_ACCES_OPENSSL + " dgst -hex -sha256 -verify gestionCertificat/public.pem -signature signature.sign stg_message.txt") == 0):
         print("Signature OK")
     else:
         print("Signature KO")
