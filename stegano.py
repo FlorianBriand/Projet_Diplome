@@ -3,60 +3,70 @@
 import time
 from PIL import Image
 
+
 def vers_8bit(c):
-	chaine_binaire = bin(ord(c))[2:]
-	return "0"*(8-len(chaine_binaire))+chaine_binaire
+    chaine_binaire = bin(ord(c))[2:]
+    return "0" * (8 - len(chaine_binaire)) + chaine_binaire
+
 
 def modifier_pixel(pixel, bit):
-	# on modifie que la composante rouge
-	r_val = pixel[0]
-	rep_binaire = bin(r_val)[2:]
-	rep_bin_mod = rep_binaire[:-1] + bit
-	r_val = int(rep_bin_mod, 2)
-	return tuple([r_val] + list(pixel[1:]))
+    # on modifie que la composante rouge
+    r_val = pixel[0]
+    rep_binaire = bin(r_val)[2:]
+    rep_bin_mod = rep_binaire[:-1] + bit
+    r_val = int(rep_bin_mod, 2)
+    return tuple([r_val] + list(pixel[1:]))
+
 
 def recuperer_bit_pfaible(pixel):
-	r_val = pixel[0]
-	return bin(r_val)[-1]
-
-def cacher(image,message):
-	dimX,dimY = image.size
-	im = image.load()
-	message_binaire = ''.join([vers_8bit(c) for c in message])
-	posx_pixel = 0
-	posy_pixel = 0
-	for bit in message_binaire:
-		im[posx_pixel,posy_pixel] = modifier_pixel(im[posx_pixel,posy_pixel],bit)
-		posx_pixel += 1
-		if (posx_pixel == dimX):
-			posx_pixel = 0
-			posy_pixel += 1
-		assert(posy_pixel < dimY)
-
-def recuperer(image,taille):
-	message = ""
-	dimX,dimY = image.size
-	im = image.load()
-	posx_pixel = 0
-	posy_pixel = 0
-	for rang_car in range(0,taille):
-		rep_binaire = ""
-		for rang_bit in range(0,8):
-			rep_binaire += recuperer_bit_pfaible(im[posx_pixel,posy_pixel])
-			posx_pixel +=1
-			if (posx_pixel == dimX):
-				posx_pixel = 0
-				posy_pixel += 1
-		message += chr(int(rep_binaire, 2))
-	return message
+    r_val = pixel[0]
+    return bin(r_val)[-1]
 
 
+def cacher(image, message):
+    dimX, dimY = image.size
+    im = image.load()
+    message_binaire = ''.join([vers_8bit(c) for c in message])
+    posx_pixel = 0
+    posy_pixel = 0
+    for bit in message_binaire:
+        im[posx_pixel, posy_pixel] = modifier_pixel(im[posx_pixel, posy_pixel], bit)
+        posx_pixel += 1
+        if (posx_pixel == dimX):
+            posx_pixel = 0
+            posy_pixel += 1
+        assert (posy_pixel < dimY)
 
+
+def recuperer(image, taille):
+    message = ""
+    dimX, dimY = image.size
+    im = image.load()
+    posx_pixel = 0
+    posy_pixel = 0
+    for rang_car in range(0, taille):
+        rep_binaire = ""
+        for rang_bit in range(0, 8):
+            rep_binaire += recuperer_bit_pfaible(im[posx_pixel, posy_pixel])
+            posx_pixel += 1
+            if (posx_pixel == dimX):
+                posx_pixel = 0
+                posy_pixel += 1
+        message += chr(int(rep_binaire, 2))
+    return message
+
+
+if __name__ == "__main__":
+
+
+    mon_image = Image.open("diplome/uploads/C_R.png")
+    message_retrouve = recuperer(mon_image, 80)
+    print(message_retrouve)
 
 '''
 # Valeurs par defaut
 nom_defaut = "image_test.png"
-message_defaut = "Florian Briand CY Tech" + str(time.time())
+message_defaut = "Florian Briand CY Tech" + str(time.time())+"**********"
 choix_defaut = 1
 
 # programme de demonstration
@@ -80,5 +90,4 @@ else :
 	mon_image = Image.open(nom_fichier)
 	message_retrouve = recuperer(mon_image, message_a_traiter)
 	print (message_retrouve)
-
 '''

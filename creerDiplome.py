@@ -25,8 +25,6 @@ def creerDiplome(nom, prenom, nomDiplome, timestamp):
 
 def signatureMessage(message,nom,prenom):
     os.system("echo  " + message + " > code.txt")
-    # TODO : Ajouter la gestion d'erreur
-    #os.system(CHEMIN_ACCES_OPENSSL + " dgst -sha256 -sign private/private.pem -out sha256.sign code.txt")
     resultatSignature = os.system(CHEMIN_ACCES_OPENSSL + " dgst -sha256 -passin pass:toto -sign gestionCertificat/private/private.pem -out diplome/diplomeCree/"+nom+"_"+prenom+".sign code.txt")
     print("resultatSignature : ", resultatSignature)
     if (resultatSignature == 0):
