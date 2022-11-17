@@ -42,6 +42,10 @@ def verifDiplome(filename):
 
     signature = dQRC.detecteQRcode(imageqrcode)
 
+    # C:\MesProgrammes\OpenSSL-Win64\bin\openssl.exe dgst -hex -sha256 -passin pass:toto -sign gestionCertificat/private/private.pem -out test.sign code.txt
+    # C:\MesProgrammes\OpenSSL-Win64\bin\openssl.exe dgst  -sha256 -passin pass:toto -sign gestionCertificat/private/private.pem -out test.sign code.txt
+
+
     # encoder la signature en base2
     signature = base64.b64decode(signature)
     print("signature:", signature)
