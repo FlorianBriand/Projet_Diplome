@@ -40,6 +40,7 @@ def infoStegano(message, nom, prenom):
     imageCertif = Image.open("diplome/image_test.png")
     # Completer le message avec des étoiles pour avoir une taille de 80 caractères
     message = message + "*" * (80 - len(message))
+    print("message : ", message)
     stg.cacher(imageCertif, message)
     imageCertif.save("diplome/diplomeCree/stegano_" + nom + "_" + prenom + ".png")
     return

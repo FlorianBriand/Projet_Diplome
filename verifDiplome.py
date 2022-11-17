@@ -29,7 +29,7 @@ def verifDiplome(filename):
     nom, prenom, nomDiplome, timestamp = recupInfo(message)
     # enlever les étoiles
     message = message.replace("*", "")
-    os.system("echo " + message + " > message.txt")
+    os.system("echo " + message + " > stg_message.txt")
 
     # Decrypter le QRcode
     # TODO Changer le nom du fichier par le fichier uploadé

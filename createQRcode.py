@@ -5,9 +5,7 @@ import qrcode
 def creerQRcode(nom, prenom):
     # Get the content of the .sign
     # and convert it to a string
-    # TODO : A changer par le nom et le prenom de la personne
-    #with open("gestionCertificat/"+nom+"_"+prenom+".sign", "rb") as f:
-    with open("gestionCertificat/sha256.sign", "rb") as f:
+    with open("diplome/diplomeCree/"+nom+"_"+prenom+".sign", "rb") as f:
         content = f.read()
         # decode the content to base 64
         content = base64.b64encode(content)
