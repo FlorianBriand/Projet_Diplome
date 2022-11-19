@@ -8,8 +8,8 @@ def creerQRcode(nom, prenom):
     with open("diplome/diplomeCree/"+nom+"_"+prenom+".sign", "rb") as f:
 
         content = f.read()
-        print("AVant encodage64" + content)
-        content = base64.b64encode(content)
+        print("AVant encodage" + str(content))
+        content = hexlify(content)
         print(content)
 
         # Create qr code instance with the file sha256.sign

@@ -48,7 +48,9 @@ def creerDiplome():
 
         # Insérer les valeurs dans un fichier texte
         with open('diplome/diplomeCree/diplomes.txt', 'a') as f:
-            f.write(nom + ' ' + prenom + ' ' + nomDiplome + ' ' +timestamp +'\n')
+            f.write(nom + '||' + prenom + '||' + nomDiplome + '||' +timestamp +'\n')
+            # close the file
+            f.close()
 
         return redirect(url_for('listeDiplomes'))
     else:
@@ -61,8 +63,10 @@ def listeDiplomes():
     diplomes = []
     with open('diplome/diplomeCree/diplomes.txt', 'r') as f:
         for line in f:
-            nom, prenom, nomDiplome, timestamp = line.split(' ')
+            nom, prenom, nomDiplome, timestamp = line.split('||')
             diplomes.append({'nom': nom, 'prenom': prenom, 'nomDiplome': nomDiplome, 'timestamp': timestamp})
+        # close the file
+        f.close()
     return render_template('listeDiplomes.html', diplomes=diplomes)
 
 # Verfier le fichier uploadé

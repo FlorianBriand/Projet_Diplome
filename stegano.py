@@ -59,7 +59,7 @@ def recuperer(image, taille):
 if __name__ == "__main__":
 
 
-    mon_image = Image.open("diplome/uploads/C_R.png")
+    mon_image = Image.open("diplome/diplomeCree/stegano_R_R.png")
     message_retrouve = recuperer(mon_image, 80)
     print(message_retrouve)
 

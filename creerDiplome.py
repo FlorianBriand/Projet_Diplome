@@ -3,14 +3,15 @@ from PIL import Image
 import stegano as stg
 import createQRcode as crQRC
 
+
 CHEMIN_ACCES_OPENSSL = "C:\\MesProgrammes\\OpenSSL-Win64\\bin\\openssl.exe"
 
 def creerDiplome(nom, prenom, nomDiplome, timestamp):
     # Lancement de la création du diplome
     print("Création du diplome en cours...")
-    message = nom + " " + prenom + " " + nomDiplome + " " + timestamp
+    message = nom + "||" + prenom + "||" + nomDiplome + "||" + timestamp
     # Mettre les informations en stégano dans l'image
-    infoStegano(message, nom, prenom)
+    creerPNGDiplomeStegano(message, nom, prenom)
     print("Stegano OK : ", message)
     # Signer les informations en stégano dans l'image avec la clé privée
     print("Signature en cours...")
@@ -24,9 +25,10 @@ def creerDiplome(nom, prenom, nomDiplome, timestamp):
     return
 
 def signatureMessage(message,nom,prenom):
-    os.system("echo  " + message + " > code.txt")
+    nomFichier = "code.txt"
+    writeMessageOnFile(message,nomFichier)
+
     resultatSignature = os.system(CHEMIN_ACCES_OPENSSL + " dgst -sha256 -passin pass:toto -sign gestionCertificat/private/private.pem -out diplome/diplomeCree/"+nom+"_"+prenom+".sign code.txt")
-    print("resultatSignature : ", resultatSignature)
     if (resultatSignature == 0):
         print("Signature OK")
     else:
@@ -36,7 +38,7 @@ def signatureMessage(message,nom,prenom):
     os.system("del code.txt")
     return
 
-def infoStegano(message, nom, prenom):
+def creerPNGDiplomeStegano(message, nom, prenom):
     imageCertif = Image.open("diplome/image_test.png")
     # Completer le message avec des étoiles pour avoir une taille de 80 caractères
     message = message + "*" * (80 - len(message))
@@ -44,3 +46,29 @@ def infoStegano(message, nom, prenom):
     stg.cacher(imageCertif, message)
     imageCertif.save("diplome/diplomeCree/stegano_" + nom + "_" + prenom + ".png")
     return
+
+
+def verifWriteMessageOnFile(message, nomFichier):
+    with open(nomFichier, 'r') as f:
+        messageVerif = f.read()
+        # close the file
+        f.close()
+    if messageVerif == message:
+        print("Ecriture OK")
+    else:
+        if not os.path.isfile(nomFichier):
+            print("Le fichier n'existe pas")
+            return False
+        print("Erreur lors de l'écriture du message")
+        exit(1)
+    return
+
+def writeMessageOnFile(message, nomFichier):
+    with open(nomFichier, 'w') as f:
+        f.write(message)
+        # close the file
+        f.close()
+
+    verifWriteMessageOnFile(message, nomFichier)
+    return
+
