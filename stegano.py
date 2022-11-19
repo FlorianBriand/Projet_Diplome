@@ -57,7 +57,7 @@ def recuperer(image, taille):
     image.close()
     return message
 
-
+'''
 if __name__ == "__main__":
 
 
@@ -65,7 +65,7 @@ if __name__ == "__main__":
     message_retrouve = recuperer(mon_image, 80)
     print(message_retrouve)
 
-'''
+
 # Valeurs par defaut
 nom_defaut = "image_test.png"
 message_defaut = "Florian Briand CY Tech" + str(time.time())+"**********"
