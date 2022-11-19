@@ -5,7 +5,7 @@ import qrcode
 def creerQRcode(nom, prenom):
     # Get the content of the .sign
     # and convert it to a string
-    with open("diplome/diplomeCree/"+nom+"_"+prenom+".sign", "rb") as f:
+    with open("diplome/diplomeCree/tmp_"+nom+"_"+prenom+".sign", "rb") as f:
 
         content = f.read()
         print("AVant encodage" + str(content))

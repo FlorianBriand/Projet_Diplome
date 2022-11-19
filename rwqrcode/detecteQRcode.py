@@ -1,8 +1,5 @@
-import os
-import time
-import stegano as stg
 import cv2
-import qrcode
+
 
 def detecteQRcode(image):
     d = cv2.QRCodeDetector()
