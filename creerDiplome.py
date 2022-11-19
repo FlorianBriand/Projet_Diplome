@@ -5,6 +5,7 @@ from outils.writeFile import writeMessageOnFile
 from rwqrcode import createQRcode as crQRC
 
 CHEMIN_ACCES_OPENSSL = "C:\\MesProgrammes\\OpenSSL-Win64\\bin\\openssl.exe"
+EMPLACEMENT_DIPLOME_CREE = "diplome/diplomeCree/"
 
 def creerDiplome(nom, prenom, nomDiplome, timestamp):
     # Notre message
@@ -47,9 +48,10 @@ def creerDiplome(nom, prenom, nomDiplome, timestamp):
 
 def signatureMessage(message,nom,prenom):
     nomfichier = "tmp_" + nom + "_" + prenom + ".txt"
+
     writeMessageOnFile(message, nomfichier)
 
-    commande = CHEMIN_ACCES_OPENSSL + " dgst -sha256 -passin pass:toto -sign gestionCertificat/private/private.pem -out diplome/diplomeCree/tmp_" + nom +"_" + prenom +".sign " + nomfichier
+    commande = CHEMIN_ACCES_OPENSSL + " dgst -sha256 -passin pass:toto -sign gestionCertificat/private/private.pem -out " +EMPLACEMENT_DIPLOME_CREE+"tmp_" + nom +"_" + prenom +".sign " + nomfichier
     resultatSignature = os.system(commande)
 
     if (resultatSignature == 0):
@@ -69,7 +71,7 @@ def creerPNGDiplomeStegano(message, nom, prenom):
     message = message + "*" * (80 - len(message))
     stg.cacher(imageCertif, message)
 
-    imageCertif.save("diplome/diplomeCree/stegano_" + nom + "_" + prenom + ".png")
+    imageCertif.save(EMPLACEMENT_DIPLOME_CREE + "stegano_" + nom + "_" + prenom + ".png")
     # close the file
     imageCertif.close()
     return
