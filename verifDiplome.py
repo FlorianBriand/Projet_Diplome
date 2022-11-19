@@ -40,9 +40,12 @@ def saveSignatureQRcodeToTmpSign(message):
 
 def verifSignature():
     verifFichierExiste(TMP_SIGNATURE)
+    verifFichierExiste(TMP_STG_MESSAGE)
+    verifFichierExiste(EMPLACEMENT_CLE_PUBLIQUE)
     # TODO : comparer  stegano et QRcode
     # openssl verify with certificat
     commande = CHEMIN_ACCES_OPENSSL + " dgst -sha256 -verify " + EMPLACEMENT_CLE_PUBLIQUE + " -signature " + TMP_SIGNATURE + " " + TMP_STG_MESSAGE
+    # C:\\MesProgrammes\\OpenSSL-Win64\\bin\\openssl.exe dgst -sha256 -verify gestionCertificat/public.pem -signature tmp_signature.sign stg_message.txt
     return os.system(commande)
 
 
