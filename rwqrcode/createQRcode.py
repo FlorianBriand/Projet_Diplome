@@ -10,9 +10,7 @@ def creerQRcode(nom, prenom):
 
         content = f.read()
         f.close()
-        print("AVant encodage" + str(content))
         content = hexlify(content)
-        print(content)
 
         # Create qr code instance with the file sha256.sign
         qr = qrcode.make(content)

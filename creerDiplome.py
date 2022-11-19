@@ -49,7 +49,7 @@ def creerDiplome(nom, prenom, nomDiplome, timestamp):
 def signatureMessage(message,nom,prenom):
     nomfichier = "tmp_" + nom + "_" + prenom + ".txt"
 
-    writeMessageOnFile(message, nomfichier)
+    writeMessageOnFile(message, nomfichier, "w")
 
     commande = CHEMIN_ACCES_OPENSSL + " dgst -sha256 -passin pass:toto -sign gestionCertificat/private/private.pem -out " +EMPLACEMENT_DIPLOME_CREE+"tmp_" + nom +"_" + prenom +".sign " + nomfichier
     resultatSignature = os.system(commande)

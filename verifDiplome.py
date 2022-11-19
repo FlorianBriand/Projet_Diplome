@@ -2,7 +2,7 @@ import os
 from binascii import unhexlify
 from outils import stegano as stg
 from outils.stegano import recupImageStegano, recupInfo
-from outils.writeFile import writeMessageOnFile, verifFichierExiste, writeMessageOnFileBinary
+from outils.writeFile import writeMessageOnFile, verifFichierExiste
 from rwqrcode import detecteQRcode as dQRC
 
 CHEMIN_ACCES_OPENSSL = "C:\\MesProgrammes\\OpenSSL-Win64\\bin\\openssl.exe"
@@ -16,7 +16,7 @@ def saveMessageSteganoToTmpTxt(filename):
     # enlever les étoiles
     message = message.replace("*", "")
 
-    writeMessageOnFile(message, TMP_STG_MESSAGE)
+    writeMessageOnFile(message, TMP_STG_MESSAGE, "w")
     return message
 
 
@@ -35,7 +35,7 @@ def saveSignatureQRcodeToTmpSign(message):
     signature = unhexlify(signature)
 
     # écrire la signature dans un fichier
-    writeMessageOnFileBinary(signature, TMP_SIGNATURE)
+    writeMessageOnFile(signature, TMP_SIGNATURE, "wb")
 
 
 def verifSignature():

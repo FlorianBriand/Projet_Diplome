@@ -4,9 +4,9 @@ from flask import Flask, render_template, request, redirect, url_for
 
 import creerDiplome as cd
 import verifDiplome as vd
-from outils.writeFile import verifWriteMessageOnFile
+from outils.writeFile import verifWriteMessageOnFile, writeMessageOnFile
 
-EMPLACEMENT_DIPLOMES = "diplome/diplomeCree/diplmes.txt"
+EMPLACEMENT_DIPLOMES = "diplome/diplomeCree/diplomes.txt"
 
 app = Flask(__name__)
 
@@ -49,7 +49,10 @@ def creerDiplome():
         cd.creerDiplome(nom, prenom, nomDiplome, timestamp)
 
         # Insérer les valeurs dans un fichier texte
-        verifWriteMessageOnFile(nom + '||' + prenom + '||' + nomDiplome + '||' +timestamp +'\n', EMPLACEMENT_DIPLOMES)
+        newligne = nom + '||' + prenom + '||' + nomDiplome + '||' +timestamp +'\n'
+        with open(EMPLACEMENT_DIPLOMES, 'a') as f:
+            f.write(newligne)
+            f.close()
 
         return redirect(url_for('listeDiplomes'))
     else:
