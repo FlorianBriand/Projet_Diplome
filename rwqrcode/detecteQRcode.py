@@ -1,3 +1,4 @@
+import os
 import cv2
 
 
@@ -21,15 +22,15 @@ if __name__ == '__main__':
     # Save the qr code as a png file
     #qr.save("diplome/diplomeCree/C_R.png")
 
-    image = 'diplome/diplomeCree/E_E.png'
+    image = '../diplome/diplomeCree/A_A.png'
     # vérifier que le fichier existe
     if not os.path.isfile(image):
         print("Le fichier n'existe pas")
         exit()
     signature = detecteQRcode(image)
     print("signature:", signature)
-    '''
 
+'''
 
 
 

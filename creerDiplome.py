@@ -49,7 +49,7 @@ def signatureMessage(message,nom,prenom):
     nomfichier = "tmp_" + nom + "_" + prenom + ".txt"
     writeMessageOnFile(message, nomfichier)
 
-    commande = CHEMIN_ACCES_OPENSSL + " dgst -sha256 -passin pass:toto -sign gestionCertificat/private/private.pem -out diplome/diplomeCree/tmp_" + nom +"_" + prenom +".sign " + nomfichier + ".txt"
+    commande = CHEMIN_ACCES_OPENSSL + " dgst -sha256 -passin pass:toto -sign gestionCertificat/private/private.pem -out diplome/diplomeCree/tmp_" + nom +"_" + prenom +".sign " + nomfichier
     resultatSignature = os.system(commande)
 
     if (resultatSignature == 0):
