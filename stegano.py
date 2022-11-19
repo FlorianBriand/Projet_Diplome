@@ -53,6 +53,8 @@ def recuperer(image, taille):
                 posx_pixel = 0
                 posy_pixel += 1
         message += chr(int(rep_binaire, 2))
+    # close the file
+    image.close()
     return message
 
 
