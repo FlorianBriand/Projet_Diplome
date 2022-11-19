@@ -1,8 +1,29 @@
 #!/usr/bin/python
 # coding=utf8
-import time
+import os
 from PIL import Image
 
+# fonction qui récupère le nom,prenom,diplome,timestamp du message
+def recupInfo(message):
+    nom = message.split("||")[0]
+    prenom = message.split("||")[1]
+    nomDiplome = message.split("||")[2]
+    timestamp = message.split("||")[3]
+    return nom, prenom, nomDiplome, timestamp
+
+def recupImageStegano(filename):
+    # localisation du fichier
+    filename = "diplome/uploads/" + filename
+    # message d'erreur si le fichier n'existe pas
+    if not os.path.isfile(filename):
+        print("Le fichier n'existe pas")
+        return False
+    mon_image = Image.open(filename)
+    # message d'erreur si le fichier n'est pas une image
+    if not mon_image:
+        print("Le fichier n'est pas une image")
+        return False
+    return mon_image
 
 def vers_8bit(c):
     chaine_binaire = bin(ord(c))[2:]
