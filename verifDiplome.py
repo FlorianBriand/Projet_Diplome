@@ -3,7 +3,7 @@ from binascii import unhexlify
 
 from PIL import Image
 
-import detecteQRcode as dQRC
+from rwqrcode import detecteQRcode as dQRC
 import stegano as stg
 
 CHEMIN_ACCES_OPENSSL = "C:\\MesProgrammes\\OpenSSL-Win64\\bin\\openssl.exe"
@@ -36,8 +36,8 @@ def verifDiplome(filename):
     # enlever les étoiles
     message = message.replace("*", "")
     print("Message récupéré par stegano :" + message)
-    nomFichier = "stg_message.txt"
-    writeMessageOnFile(message, nomFichier)
+    nomfichier = "stg_message.txt"
+    writeMessageOnFile(message, nomfichier)
 
     # Decrypter le QRcode
     # TODO Changer le nom du fichier par le fichier uploadé

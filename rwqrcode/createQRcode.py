@@ -1,7 +1,4 @@
-import base64
-
 from binascii import hexlify
-from binascii import unhexlify
 
 import qrcode
 
