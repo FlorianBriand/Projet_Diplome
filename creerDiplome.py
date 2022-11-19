@@ -35,7 +35,7 @@ def signatureMessage(message,nom,prenom):
         print("Erreur lors de la signature")
         exit(1)
     # supprimer le fichier code.txt
-    os.system("del code.txt")
+    #os.system("del code.txt")
     return
 
 def creerPNGDiplomeStegano(message, nom, prenom):

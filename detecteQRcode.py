@@ -12,6 +12,7 @@ def detecteQRcode(image):
         print("QRcode detecté")
     else:
         print("Pas de QRcode")
+
     return val
 """
 if __name__ == '__main__':

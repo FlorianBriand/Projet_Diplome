@@ -51,7 +51,7 @@ def verifDiplome(filename):
 
     print(signature)
     # encoder la signature en base2
-    signature = base64.b64decode(signature)
+    signature = unhexlify(signature)
     print("signature:", signature)
     os.system("echo "" > signature.sign ")
     file = open("signature.sign", "wb")
