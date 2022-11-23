@@ -30,7 +30,7 @@ def writeMessageOnFile(message, nomFichier,mode):
 
 def verifFichierExiste(nomFichier):
     if not os.path.isfile(nomFichier):
-        print("Le fichier n'existe pas")
+        print("Le fichier " + nomFichier + " n'existe pas")
         exit(1)
         return False
     return True
