@@ -1,5 +1,7 @@
 import os
 from PIL import Image
+
+from mail import envoiMailSecurise
 from outils import stegano as stg
 from outils.writeFile import writeMessageOnFile
 from rwqrcode import createQRcode as crQRC
@@ -7,7 +9,7 @@ from rwqrcode import createQRcode as crQRC
 CHEMIN_ACCES_OPENSSL = "C:\\MesProgrammes\\OpenSSL-Win64\\bin\\openssl.exe"
 EMPLACEMENT_DIPLOME_CREE = "diplome/diplomeCree/"
 
-def creerDiplome(nom, prenom, nomDiplome, timestamp):
+def creerDiplome(nom, prenom, nomDiplome, timestamp, email):
     # Notre message
     message = nom + "||" + prenom + "||" + nomDiplome + "||" + timestamp
 
@@ -40,9 +42,16 @@ def creerDiplome(nom, prenom, nomDiplome, timestamp):
 
     print("Diplome créé avec succès")
 
+    # Envoi du diplome par mail
+    print("Etape 4 : Envoi du diplome par mail")
+    print("en cours...")
+    envoiMailSecurise(nom, prenom, email)
+    print("fini")
+
     # Nettoyage des fichiers temporaires
     os.remove("tmp_" + nom + "_" + prenom + ".txt")
     os.remove("diplome/diplomeCree/tmp_"+nom+"_"+prenom+".sign")
+    os.remove("diplome/diplomeCree/stegano_"+nom+"_"+prenom+".png")
 
     return
 

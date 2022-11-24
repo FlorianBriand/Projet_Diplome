@@ -7,8 +7,8 @@ from outils.writeFile import verifFichierExiste
 
 CHEMIN_ACCES_OPENSSL = "C:\\MesProgrammes\\OpenSSL-Win64\\bin\\openssl.exe"
 MAIL_FROM = "projetcryptofloraph@gmail.com"
-MAIL_TO = "briandflor@cy-tech.fr"
-STEGANO_FILE = "diplome/diplomeCree/stegano_S_S.png"
+MAIL_TO = ""
+STEGANO_FILE = ""
 COMMANDE_AFFICHE = "type"
 CERTIFICAT = "gestionCertificat/ca.pem"
 TMP_CONTENU_MAIL = "contenu.txt"
@@ -59,15 +59,18 @@ def lectureContenuMail():
         messageContenu = messageContenu[2:-1]
 
         # header du mail avec png en pièce jointe
-        contenu.write("Content-Type: image/png; name=\"diplome.png\"\r")
+        contenu.write("Content-Type: image/png; name=\"diplome_"+MAIL_TO+".png\"\r")
         contenu.write("Content-Transfer-Encoding: base64\r")
         contenu.write(messageContenu)
         # fermeture du fichier
         contenu.close()
 
 
-def envoiMailSecurise():
-    # encode image to base64
+def envoiMailSecurise(nom, prenom, email):
+    global MAIL_TO
+    MAIL_TO = email
+    global STEGANO_FILE
+    STEGANO_FILE = "diplome/diplomeCree/stegano_" + nom + "_" + prenom + ".png"
 
     # Création du message
     msg = MIMEMultipart()

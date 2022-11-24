@@ -33,10 +33,11 @@ def creerDiplome():
 
     if request.method == 'POST':
         # Récupérer les valeurs du formulaire
-        if request.form['nom'] and request.form['prenom'] and request.form['nomDiplome']:
+        if request.form['nom'] and request.form['prenom'] and request.form['nomDiplome'] and request.form['email']:
             nom = request.form['nom']
             prenom = request.form['prenom']
             nomDiplome = request.form['nomDiplome']
+            email = request.form['email']
             # get timestamp
             # TODO Certifier le timestamp
             now = datetime.now()
@@ -46,7 +47,7 @@ def creerDiplome():
         else:
             return "Erreur, veuillez remplir tous les champs"
 
-        cd.creerDiplome(nom, prenom, nomDiplome, timestamp)
+        cd.creerDiplome(nom, prenom, nomDiplome, timestamp, email)
 
         # Insérer les valeurs dans un fichier texte
         newligne = nom + '||' + prenom + '||' + nomDiplome + '||' +timestamp +'\n'
