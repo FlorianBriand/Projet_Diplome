@@ -11,6 +11,8 @@ MAIL_TO = "briandflor@cy-tech.fr"
 STEGANO_FILE = "diplome/diplomeCree/stegano_S_S.png"
 COMMANDE_AFFICHE = "type"
 CERTIFICAT = "gestionCertificat/ca.pem"
+TMP_CONTENU_MAIL = "contenu.txt"
+TMP_CONTENU_COURRIER = "contenu_courrier.txt"
 
 
 def affichageErreurSignatureMail(resultatEnvoieMail):
@@ -29,8 +31,8 @@ def affichageErreurSignatureMail(resultatEnvoieMail):
 
 
 def envoiMail(msg):
-    verifFichierExiste("contenu_courrier.txt")
-    with open("contenu_courrier.txt", "r") as contenu_courrier:
+    verifFichierExiste(TMP_CONTENU_COURRIER)
+    with open(TMP_CONTENU_COURRIER, "r") as contenu_courrier:
         mail = contenu_courrier.read()
         contenu_courrier.close()
     mailserver = smtplib.SMTP_SSL('smtp.gmail.com', 465)
@@ -51,12 +53,15 @@ def lectureContenuMail():
         encoded_string = base64.b64encode(image_file.read())
         image_file.close()
 
-    with open("contenu.txt", "w") as contenu:
+    with open(TMP_CONTENU_MAIL, "w") as contenu:
         messageContenu = str(encoded_string)
         # Enlever les caractères b' et ' de la chaine de caractère
         messageContenu = messageContenu[2:-1]
 
-        contenu.write("Content-Type: image/png\r\nContent-Transfer-Encoding: base64\r\n\r\n" + messageContenu)
+        # header du mail avec png en pièce jointe
+        contenu.write("Content-Type: image/png; name=\"diplome.png\"\r")
+        contenu.write("Content-Transfer-Encoding: base64\r")
+        contenu.write(messageContenu)
         # fermeture du fichier
         contenu.close()
 
@@ -69,14 +74,12 @@ def envoiMailSecurise():
     msg['From'] = MAIL_FROM
     msg['To'] = MAIL_TO
 
-    #lectureContenuMail()
+    lectureContenuMail()
 
     commande = CHEMIN_ACCES_OPENSSL + \
-               " smime -sign -in contenu.txt -out contenu_courrier.txt -signer " + \
+               " smime -sign -in " + TMP_CONTENU_MAIL + " -out " + TMP_CONTENU_COURRIER + " -signer " + \
                CERTIFICAT + " -inkey gestionCertificat/private/private.pem" \
                             " -passin pass:toto -from '" + MAIL_FROM + "' -to '" + MAIL_TO + "' -subject 'Envoicertificat'"
-
-    print(commande)
 
     resultatEnvoieMail = os.system(commande)
 
@@ -85,10 +88,9 @@ def envoiMailSecurise():
     envoiMail(msg)
 
     # Nettoyage des fichiers
-    #os.remove("contenu.txt")
-    os.remove("contenu_courrier.txt")
+    os.remove(TMP_CONTENU_MAIL)
+    os.remove(TMP_CONTENU_COURRIER)
 
 
 if __name__ == '__main__':
-    # envoyer un mail automatiquement
     envoiMailSecurise()
