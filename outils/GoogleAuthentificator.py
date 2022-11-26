@@ -21,3 +21,4 @@ if __name__ == "__main__":
     print("Secret : " + secret)
     code = GoogleAuthenticatorCode(secret)
     print("Code : " + code)
+

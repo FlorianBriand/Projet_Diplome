@@ -1,9 +1,10 @@
 from datetime import datetime
 
-from flask import Flask, render_template, request, redirect, url_for
+from flask import Flask, render_template, request, redirect, url_for, make_response
 
 import creerDiplome as cd
 import verifDiplome as vd
+from outils.GoogleAuthentificator import GoogleAuthenticatorCode
 from outils.writeFile import verifWriteMessageOnFile, writeMessageOnFile
 
 EMPLACEMENT_DIPLOMES = "diplome/diplomeCree/diplomes.txt"
@@ -29,7 +30,11 @@ def hello_world():
 
 @app.route('/creerDiplome', methods=['GET', 'POST'])
 def creerDiplome():
-    # TODO : Rajouter l'OTP
+    # Vérification si l'utilisateur possède le cookie ou qu'il n'est pas égale à 0
+    if request.cookies.get('otp') == None or request.cookies.get('otp') != 'MDP_SECRET':
+        # Redirection vers la page de vérification OTP
+        return redirect(url_for('verifOTP'))
+
 
     if request.method == 'POST':
         # Récupérer les valeurs du formulaire
@@ -85,6 +90,26 @@ def verifDiplom():
     else:
         return render_template('verifDiplome.html')
 
+
+# OTP
+@app.route('/verifOTP', methods=['GET', 'POST'])
+def verifOTP():
+    if request.method == 'POST':
+        # Récupérer les valeurs du formulaire
+        if request.form['otp']:
+            otp = request.form['otp']
+            if otp == GoogleAuthenticatorCode("FBSWY3DPEHPK3PXP"):
+                # Créer le cookie
+                resp = make_response(render_template('creerDiplome.html'))
+                resp.set_cookie('otp', "MDP_SECRET")
+                return resp
+            else:
+                return "Erreur, OTP incorrect"
+        #sinon on revoie une erreur
+        else:
+            return "Erreur, veuillez remplir tous les champs"
+    else:
+        return render_template('otp.html')
 
 
 
