@@ -5,8 +5,8 @@
     <title>Liste diplômes</title>
 </head>
 <body>
-    <h1>Liste des diplômes</h1>
-    <!-- Flask diplomes liste -->
+<h1>Liste des diplômes</h1>
+<!-- Flask diplomes liste -->
 <table>
     <tr>
         <th>nom</th>
@@ -17,13 +17,18 @@
     {% for diplome in diplomes %}
     <tr>
         <td>{{ diplome.nom }}</td>
-      <td> {{diplome.prenom}}</td>
+        <td> {{diplome.prenom}}</td>
         <td>{{ diplome.nomDiplome }}</td>
         <td>{{diplome.timestamp}}</td>
+        <td>{{diplome.email}}</td>
+        <!-- Regenerate diplome -->
+        <td><a href="/regenDiplome/{{diplome.id}}">Regénérer</a></td>
+
+
     </tr>
     {% endfor %}
     <!-- Renvoyer à la page d'accueil -->
-    <a href="/" >Retour</a>
+    <a href="/">Retour</a>
 
 
 </table>
