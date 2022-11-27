@@ -13,6 +13,8 @@
         <th>prenom</th>
         <th>intitulé</th>
         <th>timestamp</th>
+        <th>email</th>
+        <th>Actions</th>
     </tr>
     {% for diplome in diplomes %}
     <tr>
@@ -22,7 +24,9 @@
         <td>{{diplome.timestamp}}</td>
         <td>{{diplome.email}}</td>
         <!-- Regenerate diplome -->
-        <td><a href="/regenDiplome/{{diplome.id}}">Regénérer</a></td>
+        <td>
+            <a href="/regenDiplome?time={{diplome.timestamp}}&nom={{diplome.nom}}&prenom={{diplome.prenom}}&nomDiplome={{diplome.nomDiplome}}&email={{diplome.email}}">Renvoyer
+                le diplôme</a></td>
 
 
     </tr>
