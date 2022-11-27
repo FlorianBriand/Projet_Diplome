@@ -94,9 +94,9 @@ def insertTextInImage(nom, prenom):
     draw = ImageDraw.Draw(img1)
 
     draw.text((750, 350), "Diplôme", (0, 0, 0), font=fonttitre)
-    draw.text((350, 500), prenom, (0, 0, 0), font=font)
-    draw.text((350, 600), nom, (0, 0, 0), font=font)
-    draw.text((350, 700), "CY Tech", (0, 0, 0), font=font)
+    draw.text((700, 500), prenom, (0, 0, 0), font=font)
+    draw.text((700, 600), nom, (0, 0, 0), font=font)
+    draw.text((700, 700), "CY Tech", (0, 0, 0), font=font)
 
     # save the image
     img1.save("diplome/diplomeCree/stegano_" + nom + "_" + prenom + ".png")
