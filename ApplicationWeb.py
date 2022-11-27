@@ -60,7 +60,12 @@ def creerDiplome():
             f.write(newligne)
             f.close()
 
-        return redirect(url_for('listeDiplomes'))
+        # Rediriiger vers la liste des diplomes
+        return "Le diplôme a bien été créé" \
+               "<br>" \
+               "<a href='/'>Retour à l'accueil</a>" \
+               "<br>" \
+               "<a href='/listeDiplomes'>Voir la liste des diplômes</a>"
     else:
         return render_template('creerDiplome.html')
 
@@ -72,7 +77,8 @@ def listeDiplomes():
     with open('diplome/diplomeCree/diplomes.txt', 'r') as f:
         for line in f:
             nom, prenom, nomDiplome, timestamp, email = line.split('||')
-            diplomes.append({'nom': nom, 'prenom': prenom, 'nomDiplome': nomDiplome, 'timestamp': timestamp, 'email': email})
+            diplomes.append(
+                {'nom': nom, 'prenom': prenom, 'nomDiplome': nomDiplome, 'timestamp': timestamp, 'email': email})
         # close the file
         f.close()
     return render_template('listeDiplomes.html', diplomes=diplomes)
