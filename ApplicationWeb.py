@@ -11,9 +11,9 @@ EMPLACEMENT_DIPLOMES = "diplome/diplomeCree/diplomes.txt"
 
 app = Flask(__name__)
 
+
 @app.route("/")
 def hello_world():
-
     return """
     <html>
     <head>
@@ -28,13 +28,13 @@ def hello_world():
     </html>
     """
 
+
 @app.route('/creerDiplome', methods=['GET', 'POST'])
 def creerDiplome():
     # Vérification si l'utilisateur possède le cookie ou qu'il n'est pas égale à 0
     if request.cookies.get('otp') == None or request.cookies.get('otp') != 'MDP_SECRET':
         # Redirection vers la page de vérification OTP
         return redirect(url_for('verifOTP'))
-
 
     if request.method == 'POST':
         # Récupérer les valeurs du formulaire
@@ -48,14 +48,14 @@ def creerDiplome():
             now = datetime.now()
             timestamp = str(round(datetime.timestamp(now)))
             print("timestamp =", timestamp)
-        #sinon on revoie une erreur
+        # sinon on renvoie une erreur
         else:
             return "Erreur, veuillez remplir tous les champs"
 
         cd.creerDiplome(nom, prenom, nomDiplome, timestamp, email)
 
         # Insérer les valeurs dans un fichier texte
-        newligne = nom + '||' + prenom + '||' + nomDiplome + '||' +timestamp +'\n'
+        newligne = nom + '||' + prenom + '||' + nomDiplome + '||' + timestamp + '||' + email + '\n'
         with open(EMPLACEMENT_DIPLOMES, 'a') as f:
             f.write(newligne)
             f.close()
@@ -71,11 +71,12 @@ def listeDiplomes():
     diplomes = []
     with open('diplome/diplomeCree/diplomes.txt', 'r') as f:
         for line in f:
-            nom, prenom, nomDiplome, timestamp = line.split('||')
-            diplomes.append({'nom': nom, 'prenom': prenom, 'nomDiplome': nomDiplome, 'timestamp': timestamp})
+            nom, prenom, nomDiplome, timestamp, email = line.split('||')
+            diplomes.append({'nom': nom, 'prenom': prenom, 'nomDiplome': nomDiplome, 'timestamp': timestamp, 'email': email})
         # close the file
         f.close()
     return render_template('listeDiplomes.html', diplomes=diplomes)
+
 
 # Verfier le fichier uploadé
 @app.route('/verifDiplome', methods=['GET', 'POST'])
@@ -89,11 +90,16 @@ def verifDiplom():
         if resultatVerifSignature == 0:
             return "Le diplôme est valide" \
                    "<br>" \
-                      "<a href='/'>Retour</a>"
+                   "<a href='/'>Retour</a>" \
+                   "<br>" \
+                   "<a href='/verifDiplome'>Vérifier un autre diplôme</a>"
         else:
             return "Le diplôme est invalide" \
-                      "<br>" \
-                        "<a href='/'>Retour</a>"
+                   "<br>" \
+                   "<a href='/'>Retour</a>" \
+                   "<br>" \
+                   "<a href='/verifDiplome'>Vérifier un autre diplôme</a>"
+
     else:
         return render_template('verifDiplome.html')
 
@@ -112,13 +118,12 @@ def verifOTP():
                 return resp
             else:
                 return "Erreur, OTP incorrect"
-        #sinon on revoie une erreur
+        # sinon on renvoie une erreur
         else:
             return "Erreur, veuillez remplir tous les champs"
     else:
         return render_template('otp.html')
 
 
-
 if __name__ == "__main__":
-        app.run(host='127.0.0.1', port=8080, debug=True)
+    app.run(host='127.0.0.1', port=8080, debug=True)
