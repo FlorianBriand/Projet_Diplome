@@ -1,5 +1,6 @@
 import os
 from binascii import unhexlify
+
 from outils import stegano as stg
 from outils.stegano import recupImageStegano, recupInfo
 from outils.writeFile import writeMessageOnFile, verifFichierExiste
@@ -9,6 +10,7 @@ CHEMIN_ACCES_OPENSSL = "C:\\MesProgrammes\\OpenSSL-Win64\\bin\\openssl.exe"
 EMPLACEMENT_CLE_PUBLIQUE = "gestionCertificat/public.pem"
 TMP_SIGNATURE = "tmp_signature.sign"
 TMP_STG_MESSAGE = "stg_message.txt"
+
 
 def saveMessageSteganoToTmpTxt(filename):
     image_stegano = recupImageStegano(filename)
@@ -20,12 +22,10 @@ def saveMessageSteganoToTmpTxt(filename):
     return message
 
 
-def saveSignatureQRcodeToTmpSign(message):
-
+def saveSignatureQRcodeToTmpSign(message, filename):
     nom, prenom, nomDiplome, timestamp = recupInfo(message)
 
-    # TODO Changer le nom du fichier par le fichier uploadé
-    imageqrcode = "diplome/diplomeCree/stegano_" + nom + "_" + prenom + ".png"
+    imageqrcode = "diplome/uploads/" + filename
 
     verifFichierExiste(imageqrcode)
 
@@ -42,10 +42,9 @@ def verifSignature():
     verifFichierExiste(TMP_SIGNATURE)
     verifFichierExiste(TMP_STG_MESSAGE)
     verifFichierExiste(EMPLACEMENT_CLE_PUBLIQUE)
-    # TODO : comparer  stegano et QRcode
-    # openssl verify with certificat
+
     commande = CHEMIN_ACCES_OPENSSL + " dgst -sha256 -verify " + EMPLACEMENT_CLE_PUBLIQUE + " -signature " + TMP_SIGNATURE + " " + TMP_STG_MESSAGE
-    # C:\\MesProgrammes\\OpenSSL-Win64\\bin\\openssl.exe dgst -sha256 -verify gestionCertificat/public.pem -signature tmp_signature.sign stg_message.txt
+
     return os.system(commande)
 
 
@@ -59,7 +58,7 @@ def verifDiplome(filename):
 
     print("Etape 2 : Lecture du QRcode")
     print("en cours...")
-    saveSignatureQRcodeToTmpSign(message)
+    saveSignatureQRcodeToTmpSign(message, filename)
     print("fini")
 
     print("Etape 3 : Vérification de la signature")
@@ -71,7 +70,6 @@ def verifDiplome(filename):
     os.remove(TMP_SIGNATURE)
     os.remove("diplome/uploads/" + filename)
     os.remove(TMP_STG_MESSAGE)
-
 
     if resultatSignature == 0:
         print("Le diplome est valide")
