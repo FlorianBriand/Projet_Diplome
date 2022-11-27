@@ -1,7 +1,9 @@
 #!/usr/bin/python
 # coding=utf8
 import os
+
 from PIL import Image
+
 
 # fonction qui récupère le nom,prenom,diplome,timestamp du message
 def recupInfo(message):

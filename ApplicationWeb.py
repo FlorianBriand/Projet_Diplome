@@ -5,7 +5,6 @@ from flask import Flask, render_template, request, redirect, url_for, make_respo
 import creerDiplome as cd
 import verifDiplome as vd
 from outils.GoogleAuthentificator import GoogleAuthenticatorCode
-from outils.writeFile import verifWriteMessageOnFile, writeMessageOnFile
 
 EMPLACEMENT_DIPLOMES = "diplome/diplomeCree/diplomes.txt"
 
@@ -34,6 +33,7 @@ def hello_world():
 @app.route('/creerDiplome', methods=['GET', 'POST'])
 def creerDiplome():
     # Vérification si l'utilisateur possède le cookie ou qu'il n'est pas égale à 0
+    # TODO Changer MDP_SECRET par un mot de passe aléatoire
     if request.cookies.get('otp') == None or request.cookies.get('otp') != 'MDP_SECRET':
         # Redirection vers la page de vérification OTP
         return redirect(url_for('verifOTP'))
@@ -148,6 +148,7 @@ def regenDiplome():
                "<br>" \
                "<a href='/listeDiplomes'>Retour à la liste des diplômes</a>"
 
+    # TODO Changer le MDP_SECRET par un MDP généré aléatoirement
     if request.cookies.get('otp') == None or request.cookies.get('otp') != 'MDP_SECRET':
         # Redirection vers la page de vérification OTP
         return redirect(url_for('verifOTP'))

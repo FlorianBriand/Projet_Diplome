@@ -1,11 +1,8 @@
 import os
 from binascii import hexlify
-from PIL import Image
 
 import qrcode
-from qrcode import ERROR_CORRECT_L
-
-from pyzbar.pyzbar import decode
+from PIL import Image
 
 
 def creerQRcode(nom, prenom):

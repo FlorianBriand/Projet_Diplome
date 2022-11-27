@@ -1,5 +1,4 @@
-import os
-import cv2
+from pyzbar.pyzbar import decode
 from pyzbar.pyzbar import decode
 from PIL import Image
 
