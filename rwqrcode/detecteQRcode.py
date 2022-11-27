@@ -1,20 +1,16 @@
 import os
 import cv2
-
+from pyzbar.pyzbar import decode
+from PIL import Image
 
 def detecteQRcode(image):
-    d = cv2.QRCodeDetector()
-    val, points, qrcode = d.detectAndDecode(cv2.imread(image))
-    # si le QRcode n'est pas détecté
-    if points is None:
-        print("QRcode non détecté")
-        print("Valeur du QRcode : " + str(val))
-        return False
-    # si la taille de val n'est pas comprise entre 200 et 700 caractères, erreur
-    if len(val) < 200 or len(val) > 700:
-        print("Le QRcode n'est pas une signature de diplome")
-        return False
-    return val
+    decodeQR = decode(Image.open(image))
+    if decodeQR == []:
+        print("Aucun QR code n'a été détecté")
+    decodeQR = decodeQR[0].data.decode("utf-8")
+    print("Le QR code détecté est : " + decodeQR)
+    return decodeQR
+
 
 '''
 if __name__ == '__main__':

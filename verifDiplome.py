@@ -25,7 +25,7 @@ def saveSignatureQRcodeToTmpSign(message):
     nom, prenom, nomDiplome, timestamp = recupInfo(message)
 
     # TODO Changer le nom du fichier par le fichier uploadé
-    imageqrcode = "diplome/diplomeCree/" + nom + "_" + prenom + ".png"
+    imageqrcode = "diplome/diplomeCree/stegano_" + nom + "_" + prenom + ".png"
 
     verifFichierExiste(imageqrcode)
 

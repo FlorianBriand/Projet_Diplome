@@ -3,11 +3,12 @@ from PIL import Image
 
 from mail import envoiMailSecurise
 from outils import stegano as stg
-from outils.writeFile import writeMessageOnFile
+from outils.writeFile import writeMessageOnFile, verifFichierExiste
 from rwqrcode import createQRcode as crQRC
 
 CHEMIN_ACCES_OPENSSL = "C:\\MesProgrammes\\OpenSSL-Win64\\bin\\openssl.exe"
 EMPLACEMENT_DIPLOME_CREE = "diplome/diplomeCree/"
+
 
 def creerDiplome(nom, prenom, nomDiplome, timestamp, email):
     # Notre message
@@ -37,30 +38,80 @@ def creerDiplome(nom, prenom, nomDiplome, timestamp, email):
     crQRC.creerQRcode(nom, prenom)
     print("fini")
 
-    # TODO : DELETE the nom_prenom.sign
-    # TODO : Mettre le QRcode dans l'image
+    # Insérer le QRcode dans l'image
+    print("Etape 4 : Insérer le QRcode + Text dans l'image")
+    insertQRcodeInImage(nom, prenom)
+    insertTextInImage(nom, prenom)
+    print("fini")
 
     print("Diplome créé avec succès")
 
     # Envoi du diplome par mail
-    print("Etape 4 : Envoi du diplome par mail")
+    print("Etape 5 : Envoi du diplome par mail")
     print("en cours...")
     envoiMailSecurise(nom, prenom, email)
     print("fini")
 
     # Nettoyage des fichiers temporaires
+    os.remove("diplome/diplomeCree/" + nom + "_" + prenom + ".png")
     os.remove("tmp_" + nom + "_" + prenom + ".txt")
-    os.remove("diplome/diplomeCree/tmp_"+nom+"_"+prenom+".sign")
-    os.remove("diplome/diplomeCree/stegano_"+nom+"_"+prenom+".png")
+    os.remove("diplome/diplomeCree/tmp_" + nom + "_" + prenom + ".sign")
+    #os.remove("diplome/diplomeCree/stegano_" + nom + "_" + prenom + ".png")
 
     return
 
-def signatureMessage(message,nom,prenom):
+
+def insertQRcodeInImage(nom, prenom):
+    verifFichierExiste("diplome/diplomeCree/stegano_" + nom + "_" + prenom + ".png")
+    verifFichierExiste("diplome/diplomeCree/" + nom + "_" + prenom + ".png")
+
+    # Opening the primary image
+    img1 = Image.open("diplome/diplomeCree/stegano_" + nom + "_" + prenom + ".png")
+
+    # Opening the secondary image (used as a watermark)
+    img2 = Image.open(r"diplome/diplomeCree/" + nom + "_" + prenom + ".png")
+
+    # Pasting img2 image on top of img1
+    img1.paste(img2, (1400, 910))
+
+    # Saving the image
+    img1.save("diplome/diplomeCree/stegano_" + nom + "_" + prenom + ".png")
+
+    # Closing the image
+    img1.close()
+    return
+
+
+def insertTextInImage(nom, prenom):
+    verifFichierExiste("diplome/diplomeCree/stegano_" + nom + "_" + prenom + ".png")
+
+    # Opening the image
+    img1 = Image.open("diplome/diplomeCree/stegano_" + nom + "_" + prenom + ".png")
+
+    fonttitre = ImageFont.truetype("arial.ttf", 70)
+    font = ImageFont.truetype("arial.ttf", 50)
+
+    draw = ImageDraw.Draw(img1)
+
+    draw.text((750, 350), "Diplôme", (0, 0, 0), font=fonttitre)
+    draw.text((350, 500), prenom, (0, 0, 0), font=font)
+    draw.text((350, 600), nom, (0, 0, 0), font=font)
+    draw.text((350, 700), "CY Tech", (0, 0, 0), font=font)
+
+    # save the image
+    img1.save("diplome/diplomeCree/stegano_" + nom + "_" + prenom + ".png")
+
+    # Closing the image
+    img1.close()
+    return
+
+
+def signatureMessage(message, nom, prenom):
     nomfichier = "tmp_" + nom + "_" + prenom + ".txt"
 
     writeMessageOnFile(message, nomfichier, "w")
 
-    commande = CHEMIN_ACCES_OPENSSL + " dgst -sha256 -passin pass:toto -sign gestionCertificat/private/private.pem -out " +EMPLACEMENT_DIPLOME_CREE+"tmp_" + nom +"_" + prenom +".sign " + nomfichier
+    commande = CHEMIN_ACCES_OPENSSL + " dgst -sha256 -passin pass:toto -sign gestionCertificat/private/private.pem -out " + EMPLACEMENT_DIPLOME_CREE + "tmp_" + nom + "_" + prenom + ".sign " + nomfichier
     resultatSignature = os.system(commande)
 
     if (resultatSignature == 0):
@@ -68,6 +119,7 @@ def signatureMessage(message,nom,prenom):
     else:
         print("Erreur lors de la signature")
     return
+
 
 def creerPNGDiplomeStegano(message, nom, prenom):
     # Vérifier si le fichier existe

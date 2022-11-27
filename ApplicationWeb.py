@@ -86,7 +86,14 @@ def verifDiplom():
         # Sauvegarder le fichier dans le dossier upload
         f.save('diplome/uploads/' + f.filename)
         resultatVerifSignature = vd.verifDiplome(f.filename)
-        return redirect(url_for('listeDiplomes'))
+        if resultatVerifSignature == 0:
+            return "Le diplôme est valide" \
+                   "<br>" \
+                      "<a href='/'>Retour</a>"
+        else:
+            return "Le diplôme est invalide" \
+                      "<br>" \
+                        "<a href='/'>Retour</a>"
     else:
         return render_template('verifDiplome.html')
 
