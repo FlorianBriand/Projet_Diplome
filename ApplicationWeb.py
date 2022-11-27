@@ -34,7 +34,6 @@ def hello_world():
 @app.route('/creerDiplome', methods=['GET', 'POST'])
 def creerDiplome():
     # Vérification si l'utilisateur possède le cookie ou qu'il n'est pas égale à 0
-    # TODO Changer MDP_SECRET par un mot de passe aléatoire
     if request.cookies.get('otp') == None or verifCookie(request.cookies.get('otp')):
         # Redirection vers la page de vérification OTP
         return redirect(url_for('verifOTP'))
