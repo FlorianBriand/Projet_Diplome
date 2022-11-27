@@ -1,5 +1,5 @@
 import os
-from PIL import Image
+from PIL import Image, ImageDraw, ImageFont
 
 from mail import envoiMailSecurise
 from outils import stegano as stg
