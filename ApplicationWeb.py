@@ -5,6 +5,7 @@ from flask import Flask, render_template, request, redirect, url_for, make_respo
 import creerDiplome as cd
 import verifDiplome as vd
 from outils.GoogleAuthentificator import GoogleAuthenticatorCode
+from outils.secureCookie import generatePasswordWriteItInFile, verifCookie
 
 EMPLACEMENT_DIPLOMES = "diplome/diplomeCree/diplomes.txt"
 
@@ -34,7 +35,7 @@ def hello_world():
 def creerDiplome():
     # Vérification si l'utilisateur possède le cookie ou qu'il n'est pas égale à 0
     # TODO Changer MDP_SECRET par un mot de passe aléatoire
-    if request.cookies.get('otp') == None or request.cookies.get('otp') != 'MDP_SECRET':
+    if request.cookies.get('otp') == None or verifCookie(request.cookies.get('otp')):
         # Redirection vers la page de vérification OTP
         return redirect(url_for('verifOTP'))
 
@@ -122,11 +123,17 @@ def verifOTP():
             if otp == GoogleAuthenticatorCode("FBSWY3DPEHPK3PXP"):
                 # Créer le cookie
                 resp = make_response(render_template('creerDiplome.html'))
-                resp.set_cookie('otp', "MDP_SECRET")
+
+                # Valeur aléatoire comprise entre 0-9 a-z A-Z
+                cookieValue = generatePasswordWriteItInFile()
+
+                resp.set_cookie('otp', cookieValue)
                 return resp
             else:
-                return "Erreur, OTP incorrect"
-        # sinon on renvoie une erreur
+                return "Erreur, OTP incorrect" \
+                       "<br>" \
+                       "<a href='/'>Retour</a>" \
+                    # sinon on renvoie une erreur
         else:
             return "Erreur, veuillez remplir tous les champs"
     else:
@@ -148,8 +155,7 @@ def regenDiplome():
                "<br>" \
                "<a href='/listeDiplomes'>Retour à la liste des diplômes</a>"
 
-    # TODO Changer le MDP_SECRET par un MDP généré aléatoirement
-    if request.cookies.get('otp') == None or request.cookies.get('otp') != 'MDP_SECRET':
+    if request.cookies.get('otp') == None or verifCookie(request.cookies.get('otp')):
         # Redirection vers la page de vérification OTP
         return redirect(url_for('verifOTP'))
     # Regénérer le diplome
