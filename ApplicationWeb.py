@@ -24,6 +24,8 @@ def hello_world():
     <a href="/creerDiplome">Créer un diplôme</a>
     <br>
     <a href="/verifDiplome">Vérifier un diplôme</a>
+    <br>
+    <a href="/listeDiplomes">Liste des diplômes</a>
     </body>
     </html>
     """
@@ -129,6 +131,35 @@ def verifOTP():
             return "Erreur, veuillez remplir tous les champs"
     else:
         return render_template('otp.html')
+
+
+@app.route('/regenDiplome', methods=['GET', 'POST'])
+def regenDiplome():
+    # Récuper la valeur en paramètre
+    timestamp = request.args.get('time')
+    nom = request.args.get('nom')
+    prenom = request.args.get('prenom')
+    nomDiplome = request.args.get('nomDiplome')
+    email = request.args.get('email')
+
+    # si le timestamp ou le nom ou le prenom ou le nomDiplome ou l'email est vide
+    if timestamp == None or nom == None or prenom == None or nomDiplome == None or email == None:
+        return "Erreur, dans les paramètres de l'url" \
+               "<br>" \
+               "<a href='/listeDiplomes'>Retour à la liste des diplômes</a>"
+
+    if request.cookies.get('otp') == None or request.cookies.get('otp') != 'MDP_SECRET':
+        # Redirection vers la page de vérification OTP
+        return redirect(url_for('verifOTP'))
+    # Regénérer le diplome
+    cd.creerDiplome(nom, prenom, nomDiplome, timestamp, email)
+
+    # Rediriiger vers la liste des diplomes
+    return "Le diplôme a bien été renvoyé" \
+           "<br>" \
+           "<a href='/'>Retour à l'accueil</a>" \
+           "<br>" \
+           "<a href='/listeDiplomes'>Voir la liste des diplômes</a>"
 
 
 if __name__ == "__main__":
