@@ -12,7 +12,6 @@ EMPLACEMENT_DIPLOMES = "diplome/diplomeCree/diplomes.txt"
 app = Flask(__name__)
 
 
-# TODO Créer le readme
 @app.route("/")
 def hello_world():
     return """
