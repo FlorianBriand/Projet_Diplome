@@ -3,15 +3,39 @@
 <head>
     <meta charset="UTF-8">
     <title>Vérification diplome</title>
+    <script src="https://cdn.tailwindcss.com"></script>
 </head>
-<body>
-    <h1>Vérification diplome</h1>
+<body class="text-center mx-4 space-y-2">
+    <h1 class="text-blue-600 text-5xl font-bold m-10">Vérification du diplôme</h1>
     <!-- Flask update png diplome -->
-    <form action="/verifDiplome" method="post" enctype="multipart/form-data">
-        <input type="file" name="file" id="file">
-        <input type="submit" value="Vérifier">
-    </form>
-    <!-- Renvoyer à la page d'accueil -->
-    <a href="/">Retour</a>
+    <div class="grid grid-cols-3">
+    <div class="mx-5 p-5 content-center">
+    </div>
+    <div class="mx-5 p-5 content-center">
+        <form action="/verifDiplome" method="post" enctype="multipart/form-data">
+            <label class="block text-gray-700 text-sm font-bold mb-2" for="nom">
+                    Upload diplôme :
+            </label>
+            <br>
+            <input class="text-sm text-grey-500
+            file:mr-5 file:py-2 file:px-6
+            file:rounded-full file:border-0
+            file:text-sm file:font-medium
+            file:bg-blue-50 file:text-blue-700
+            hover:file:cursor-pointer hover:file:bg-amber-50
+            hover:file:text-amber-700
+          " name="file" id="file" type="file">
+            <br>
+            <br>
+            <input type="submit" class="px-10 py-2 mt-3 rounded-full bg-gray-200 hover:text-gray-400 cursor-pointer w-full text-gray-800 font-bold" value="Vérifier">
+        </form>
+        <br>
+        <a href="/" class="px-10 py-2 m-20 rounded-full bg-blue-200 hover:text-white-400 cursor-pointer w-full text-white-800 font-bold m-50">Retour</a>
+    </div>
+    <div class="mx-5 p-5 content-center">
+
+    </div>
+    </div>
+
 </body>
 </html>

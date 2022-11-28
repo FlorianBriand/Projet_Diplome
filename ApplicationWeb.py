@@ -11,6 +11,7 @@ EMPLACEMENT_DIPLOMES = "diplome/diplomeCree/diplomes.txt"
 
 app = Flask(__name__)
 
+
 # TODO Créer le readme
 @app.route("/")
 def hello_world():
@@ -18,14 +19,21 @@ def hello_world():
     <html>
     <head>
     <title>Diplome</title>
+    <script src="https://cdn.tailwindcss.com"></script>
     </head>
-    <body>
-    <h1>Diplôme digital</h1>
-    <a href="/creerDiplome">Créer un diplôme</a>
+    <body class="text-center mx-4 space-y-2">
+    <h1 class="text-blue-600 text-5xl font-bold m-20">Diplôme digital</h1>
+    <div class="m-20 p-5">
+    <a href="/creerDiplome" class="px-11 py-2 rounded-full bg-gray-200 hover:text-gray-400 cursor-pointer w-full text-gray-800 font-bold m-50">Créer un diplôme</a>
+    </div>
     <br>
-    <a href="/verifDiplome">Vérifier un diplôme</a>
+    <div class="m-20 p-5">
+    <a href="/verifDiplome" class="px-10 py-2 rounded-full bg-gray-200 hover:text-gray-400 cursor-pointer w-full text-gray-800 font-bold m-50">Vérifier un diplôme</a>
+    </div>
     <br>
-    <a href="/listeDiplomes">Liste des diplômes</a>
+    <div class="m-20 p-5">
+    <a href="/listeDiplomes" class="px-11 py-2 rounded-full bg-gray-200 hover:text-gray-400 cursor-pointer w-full text-gray-800 font-bold m-50">Liste des diplômes</a>
+    </div>
     </body>
     </html>
     """
@@ -63,11 +71,22 @@ def creerDiplome():
             f.close()
 
         # Rediriiger vers la liste des diplomes
-        return "Le diplôme a bien été créé" \
-               "<br>" \
-               "<a href='/'>Retour à l'accueil</a>" \
-               "<br>" \
-               "<a href='/listeDiplomes'>Voir la liste des diplômes</a>"
+        return """
+        <html>
+        <head>
+        <title>DiplomeCree</title>
+        <script src="https://cdn.tailwindcss.com"></script>
+        </head>
+        <body class="text-center mx-4 space-y-2">
+        <h1 class="text-green-600 text-5xl font-bold m-20">Le diplôme a bien été créé</h1>
+        <div class="m-20 p-5">
+            <a href="/" class="px-20 py-2 rounded-full bg-gray-200 hover:text-gray-400 cursor-pointer w-full text-gray-800 font-bold m-50">Retour à l'accueil</a>
+        </div>
+        <br>
+        <div class="m-20 p-5">
+            <a href="/listeDiplomes" class="px-12 py-2 rounded-full bg-gray-200 hover:text-gray-400 cursor-pointer w-full text-gray-800 font-bold m-50">Voir la liste des diplômes</a>
+        </div>
+    """
     else:
         return render_template('creerDiplome.html')
 
@@ -96,18 +115,39 @@ def verifDiplom():
         f.save('diplome/uploads/' + f.filename)
         resultatVerifSignature = vd.verifDiplome(f.filename)
         if resultatVerifSignature == 0:
-            return "Le diplôme est valide" \
-                   "<br>" \
-                   "<a href='/'>Retour</a>" \
-                   "<br>" \
-                   "<a href='/verifDiplome'>Vérifier un autre diplôme</a>"
+            return """
+            <html>
+        <head>
+        <title>DiplomeCree</title>
+        <script src="https://cdn.tailwindcss.com"></script>
+        </head>
+        <body class="text-center mx-4 space-y-2">
+        <h1 class="text-green-600 text-5xl font-bold m-20">Le diplôme est valide</h1>
+        <div class="m-20 p-5">
+            <a href="/" class="px-20 py-2 rounded-full bg-gray-200 hover:text-gray-400 cursor-pointer w-full text-gray-800 font-bold m-50">Retour à l'accueil</a>
+        </div>
+        <br>
+        <div class="m-20 p-5">
+            <a href="/verifDiplome" class="px-12 py-2 rounded-full bg-gray-200 hover:text-gray-400 cursor-pointer w-full text-gray-800 font-bold m-50">Vérifier un autre diplôme</a>
+        </div>
+        """
         else:
-            return "Le diplôme est invalide" \
-                   "<br>" \
-                   "<a href='/'>Retour</a>" \
-                   "<br>" \
-                   "<a href='/verifDiplome'>Vérifier un autre diplôme</a>"
-
+            return """
+            <html>
+        <head>
+        <title>DiplomeCree</title>
+        <script src="https://cdn.tailwindcss.com"></script>
+        </head>
+        <body class="text-center mx-4 space-y-2">
+        <h1 class="text-red-600 text-5xl font-bold m-20">Le diplôme est invalide</h1>
+        <div class="m-20 p-5">
+            <a href="/" class="px-20 py-2 rounded-full bg-gray-200 hover:text-gray-400 cursor-pointer w-full text-gray-800 font-bold m-50">Retour à l'accueil</a>
+        </div>
+        <br>
+        <div class="m-20 p-5">
+            <a href="/verifDiplome" class="px-12 py-2 rounded-full bg-gray-200 hover:text-gray-400 cursor-pointer w-full text-gray-800 font-bold m-50">Vérifier un autre diplôme</a>
+        </div>
+            """
     else:
         return render_template('verifDiplome.html')
 
@@ -161,11 +201,22 @@ def regenDiplome():
     cd.creerDiplome(nom, prenom, nomDiplome, timestamp, email)
 
     # Rediriiger vers la liste des diplomes
-    return "Le diplôme a bien été renvoyé" \
-           "<br>" \
-           "<a href='/'>Retour à l'accueil</a>" \
-           "<br>" \
-           "<a href='/listeDiplomes'>Voir la liste des diplômes</a>"
+    return """
+    <html>
+        <head>
+        <title>DiplomeCree</title>
+        <script src="https://cdn.tailwindcss.com"></script>
+        </head>
+        <body class="text-center mx-4 space-y-2">
+        <h1 class="text-green-600 text-5xl font-bold m-20">Le diplôme a bien été renvoyé</h1>
+        <div class="m-20 p-5">
+            <a href="/" class="px-20 py-2 rounded-full bg-gray-200 hover:text-gray-400 cursor-pointer w-full text-gray-800 font-bold m-50">Retour à l'accueil</a>
+        </div>
+        <br>
+        <div class="m-20 p-5">
+            <a href="/listeDiplomes" class="px-12 py-2 rounded-full bg-gray-200 hover:text-gray-400 cursor-pointer w-full text-gray-800 font-bold m-50">Voir la liste des diplômes</a>
+        </div>
+    """
 
 
 if __name__ == "__main__":
