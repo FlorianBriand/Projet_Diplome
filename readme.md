@@ -1,3 +1,51 @@
+# Structure du projet
+
+Vidéo de présentation : Video Démo Projet.mp4
+
+Pour **lancer le projet**, il faut lancer le fichier **ApplicationWeb.py**
+
+Les autres fichiers importants sont :
+
+- **creerDiplome.py** détaille toutes les étapes de création de nos diplômes
+- **verifierDiplome.py** détaille toutes les étapes de vérification de nos diplômes
+- **mail.py** détaille toutes les étapes d'envoi de mail
+
+Dans le dossier "diplome" se trouve :
+
+- la base de données des diplomes (diplomeCree/diplomes.txt)
+- les fichiers temporaires liés aux diplomes
+- le template PNG
+
+Dans le dossier "gestionCertificat" se trouve :
+
+- le script pour générer la private key, le certificat, la signature ainsi que vérifier la validité du diplôme (creation_root_ca.py)
+- le certificat de certification de CY Tech (ca.pem)
+- la public key (public.pem)
+- la configuration de l'autorité de certification de CYTech que l'on a défini (root-ca-cert.conf)
+- un dossier contenant la private key (private.pem)
+
+Dans le dossier "outils" se trouve :
+
+- le script pour générer les codes OTP (GoogleAuthenticator.py)
+- le script pour sécuriser les cookies de connexion aléatoires (secureCookie.py)
+- la bdd pour les cookies de connexion en cours (tokenSession.txt)
+- le script pour reveler/cacher des messages par stéganographie d'une image (stegano.py)
+- le script pour écrire proprement dans un fichier (writeFile.py)
+
+Dans le dossier "rwqrcode" se trouve :
+
+- le script pour générer des QR codes (createQRcode.py)
+- le script pour lire des QR codes (detectQRcode.py)
+
+Dans le dossier "templates" se trouve :
+
+- la page HTML pour créer diplôme via un formulaire (creerDiplome.html)
+- la page HTML pour afficher les diplômes déjà créés (diplomesCrees.html)
+- la page HTML pour vérifier un OTP (otp.html)
+- la page HTML pour vérifier un diplôme (verifDiplome.html)
+
+
+
 Rapport de projet : Diplôme digital
 ===============================
 Réalisé par : [Raphael Coutinho, Florian Briand]
@@ -12,7 +60,7 @@ Notre projet est de créer une application qui permet à une école, dans le cas
 Dans ce rapport, nous allons décrire les différentes étapes de notre projet, les choix techniques que nous avons fait et
 les solutions apportées.
 
-# Structure du projet
+# Projet
 
 Nous avons choisi de créer une application web, comme IHM. Nous avons utilisé le Framework Flask pour sa réalisation,
 couplé avec Tailwind CSS pour le design. Pour la partie logique, nous avons utilisé le langage Python.
