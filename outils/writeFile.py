@@ -1,6 +1,7 @@
 import os
 
-def verifWriteMessageOnFile(message, nomFichier,mode):
+
+def verifWriteMessageOnFile(message, nomFichier, mode):
     with open(nomFichier, mode) as f:
         messageVerif = f.read()
         # close the file
@@ -14,19 +15,18 @@ def verifWriteMessageOnFile(message, nomFichier,mode):
     return
 
 
-
-
-def writeMessageOnFile(message, nomFichier,mode):
+def writeMessageOnFile(message, nomFichier, mode):
     with open(nomFichier, mode) as f:
         f.write(message)
         # close the file
         f.close()
     # si mode = "w" ou "a" on read
     if mode == "w" or mode == "a":
-        verifWriteMessageOnFile(message, nomFichier,'r')
+        verifWriteMessageOnFile(message, nomFichier, 'r')
     else:
-        verifWriteMessageOnFile(message, nomFichier,'rb')
+        verifWriteMessageOnFile(message, nomFichier, 'rb')
     return
+
 
 def verifFichierExiste(nomFichier):
     if not os.path.isfile(nomFichier):

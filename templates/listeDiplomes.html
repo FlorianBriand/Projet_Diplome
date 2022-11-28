@@ -6,50 +6,52 @@
     <script src="https://cdn.tailwindcss.com"></script>
 </head>
 <body class="text-center mx-4 space-y-2">
-    <h1 class="text-blue-600 text-5xl font-bold m-10">Liste des diplômes</h1>
-    <!-- Flask diplomes liste -->
-    <div class="overflow-x-auto relative shadow-md sm:rounded-lg">
-        <table class="w-full text-sm text-left text-gray-500 dark:text-gray-400">
-            <thead class="text-xs text-gray-700 uppercase bg-gray-50 dark:bg-gray-700 dark:text-gray-400">
-                <tr>
-                    <th scope="col" class="py-3 px-6">
-                        Nom
-                    </th>
-                    <th scope="col" class="py-3 px-6">
-                        Prenom
-                    </th>
-                    <th scope="col" class="py-3 px-6">
-                        Intitulé
-                    </th>
-                    <th scope="col" class="py-3 px-6">
-                        Timestamp
-                    </th>
-                    <th scope="col" class="py-3 px-6">
-                        Email
-                    </th>
-                    <th scope="col" class="py-3 px-6">
-                        Actions
-                    </th>
-                </tr>
-            </thead>
-            {% for diplome in diplomes %}
-                <tr class="bg-white border-b dark:bg-gray-900 dark:border-gray-700">
-                    <td class="py-4 px-6">{{ diplome.nom }}</td>
-                    <td class="py-4 px-6"> {{diplome.prenom}}</td>
-                    <td class="py-4 px-6">{{ diplome.nomDiplome }}</td>
-                    <td class="py-4 px-6">{{diplome.timestamp}}</td>
-                    <td class="py-4 px-6">{{diplome.email}}</td>
-                    <!-- Regenerate diplome -->
-                    <td class="py-4 px-6">
-                        <a href="/regenDiplome?time={{diplome.timestamp}}&nom={{diplome.nom}}&prenom={{diplome.prenom}}&nomDiplome={{diplome.nomDiplome}}&email={{diplome.email}}" class="font-medium text-blue-600 dark:text-blue-500 hover:underline">Renvoyer le diplôme</a>
-                    </td>
-                </tr>
-            {% endfor %}
-        </table><!-- Renvoyer à la page d'accueil -->
-    </div>
-    <br>
-    <div class="m-20">
-        <a href="/" class="px-10 py-2 m-20 rounded-full bg-blue-200 hover:text-white-400 cursor-pointer w-full text-white-800 font-bold m-50">Retour</a>
-    </div>
+<h1 class="text-blue-600 text-5xl font-bold m-10">Liste des diplômes</h1>
+<!-- Flask diplomes liste -->
+<div class="overflow-x-auto relative shadow-md sm:rounded-lg">
+    <table class="w-full text-sm text-left text-gray-500 dark:text-gray-400">
+        <thead class="text-xs text-gray-700 uppercase bg-gray-50 dark:bg-gray-700 dark:text-gray-400">
+        <tr>
+            <th scope="col" class="py-3 px-6">
+                Nom
+            </th>
+            <th scope="col" class="py-3 px-6">
+                Prenom
+            </th>
+            <th scope="col" class="py-3 px-6">
+                Intitulé
+            </th>
+            <th scope="col" class="py-3 px-6">
+                Timestamp
+            </th>
+            <th scope="col" class="py-3 px-6">
+                Email
+            </th>
+            <th scope="col" class="py-3 px-6">
+                Actions
+            </th>
+        </tr>
+        </thead>
+        {% for diplome in diplomes %}
+        <tr class="bg-white border-b dark:bg-gray-900 dark:border-gray-700">
+            <td class="py-4 px-6">{{ diplome.nom }}</td>
+            <td class="py-4 px-6"> {{diplome.prenom}}</td>
+            <td class="py-4 px-6">{{ diplome.nomDiplome }}</td>
+            <td class="py-4 px-6">{{diplome.timestamp}}</td>
+            <td class="py-4 px-6">{{diplome.email}}</td>
+            <!-- Regenerate diplome -->
+            <td class="py-4 px-6">
+                <a href="/regenDiplome?time={{diplome.timestamp}}&nom={{diplome.nom}}&prenom={{diplome.prenom}}&nomDiplome={{diplome.nomDiplome}}&email={{diplome.email}}"
+                   class="font-medium text-blue-600 dark:text-blue-500 hover:underline">Renvoyer le diplôme</a>
+            </td>
+        </tr>
+        {% endfor %}
+    </table><!-- Renvoyer à la page d'accueil -->
+</div>
+<br>
+<div class="m-20">
+    <a href="/"
+       class="px-10 py-2 m-20 rounded-full bg-blue-200 hover:text-white-400 cursor-pointer w-full text-white-800 font-bold m-50">Retour</a>
+</div>
 </body>
 </html>

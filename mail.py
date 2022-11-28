@@ -59,7 +59,7 @@ def lectureContenuMail():
         messageContenu = messageContenu[2:-1]
 
         # header du mail avec png en pièce jointe
-        contenu.write("Content-Type: image/png; name=\"diplome_"+MAIL_TO+".png\"\r")
+        contenu.write("Content-Type: image/png; name=\"diplome_" + MAIL_TO + ".png\"\r")
         contenu.write("Content-Transfer-Encoding: base64\r")
         contenu.write(messageContenu)
         # fermeture du fichier

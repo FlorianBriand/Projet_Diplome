@@ -57,7 +57,7 @@ def creerDiplome(nom, prenom, nomDiplome, timestamp, email):
     os.remove("diplome/diplomeCree/" + nom + "_" + prenom + ".png")
     os.remove("tmp_" + nom + "_" + prenom + ".txt")
     os.remove("diplome/diplomeCree/tmp_" + nom + "_" + prenom + ".sign")
-    #os.remove("diplome/diplomeCree/stegano_" + nom + "_" + prenom + ".png")
+    # os.remove("diplome/diplomeCree/stegano_" + nom + "_" + prenom + ".png")
 
     return
 

@@ -13,6 +13,7 @@ def recupInfo(message):
     timestamp = message.split("||")[3]
     return nom, prenom, nomDiplome, timestamp
 
+
 def recupImageStegano(filename):
     # localisation du fichier
     filename = "diplome/uploads/" + filename
@@ -26,6 +27,7 @@ def recupImageStegano(filename):
         print("Le fichier n'est pas une image")
         return False
     return mon_image
+
 
 def vers_8bit(c):
     chaine_binaire = bin(ord(c))[2:]
@@ -79,6 +81,7 @@ def recuperer(image, taille):
     # close the file
     image.close()
     return message
+
 
 '''
 if __name__ == "__main__":
